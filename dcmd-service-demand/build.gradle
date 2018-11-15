@@ -1,0 +1,43 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+		wrapperVersion = '1.0.17.RELEASE'
+	}
+	repositories {
+        //maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot.experimental:spring-boot-thin-gradle-plugin:${wrapperVersion}")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.springframework.boot.experimental.thin-launcher'
+
+//def repo = "http://10.16.0.82/nexus/repository"
+group = 'com.dcmd.service.demand'
+version = '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+thinResolvePrepare {
+	into new File("${buildDir}/thin/deploy")
+}
+
+repositories {
+     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+     //maven { url repo + "/maven-public" }
+}
+
+dependencies {
+    compile group: 'com.dcmd.common.parent', name: 'dcmd-common-parent', version:'1.0.0-SNAPSHOT'
+}
