@@ -1,7 +1,8 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
 //def repo = "http://10.128.1.147/nexus/repository"
-def repo = "http://10.16.0.82/nexus/repository"
+//def repo = "http://10.16.0.82/nexus/repository"
 group = 'com.dcmd.parent'
 version = '1.0.0-SNAPSHOT'
 description = "com-dcmd-parent"
@@ -9,16 +10,17 @@ description = "com-dcmd-parent"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+repositories {
+  mavenLocal();
+  mavenCentral();
+}
+
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
 tasks.withType(Jar) {
     destinationDir = file("$rootDir/build")
-}
-
-repositories {
-     maven { url repo + "/maven-public" }
 }
 
 dependencies {
